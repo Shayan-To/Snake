@@ -15,6 +15,7 @@ namespace Snake
         public Form1()
         {
             this.InitializeComponent();
+            this.Main = new GameMain(this.gameMainControl1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace Snake
             this.Main.EndLife();
         }
 
-        private readonly GameMain Main = new GameMain();
+        private readonly GameMain Main;
 
     }
 }

@@ -11,8 +11,10 @@ namespace Snake
     class GameMain
     {
 
-        public GameMain()
+        public GameMain(GameMainControl mainControl)
         {
+            this.MainControl = mainControl;
+
             var t = new Point(0, 0);
             for (int i = 0; i < InitialLength; i++)
             {
@@ -79,7 +81,7 @@ namespace Snake
                 }
                 this.Points.Enqueue(this.Points.Last() + this.Direction);
                 this.Points.Dequeue();
-                this.Repaint();
+                this.MainControl.Invalidate();
             }
         }
 
@@ -88,28 +90,18 @@ namespace Snake
             this.IsLiving = false;
         }
 
-        public void Repaint()
+        public void Paint(Graphics g)
         {
-            this.Graphics.Clear(Color.White);
+            g.Clear(Color.White);
             foreach (var e in this.Points)
             {
-                this.Graphics.FillRectangle(Brushes.Black, e.X * BlockSize, e.Y * BlockSize, BlockSize, BlockSize);
+                g.FillRectangle(Brushes.Black, e.X * BlockSize, e.Y * BlockSize, BlockSize, BlockSize);
             }
         }
 
-        private Graphics _Graphics;
-
-        internal Graphics Graphics
+        public GameMainControl MainControl
         {
-            get
-            {
-                return this._Graphics;
-            }
-            set
-            {
-                this._Graphics = value;
-                this.Repaint();
-            }
+            get;
         }
 
         private const int BlockSize = 7;

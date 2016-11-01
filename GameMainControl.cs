@@ -23,7 +23,7 @@ namespace Snake
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            this.Main?.Repaint();
+            this.Main?.Paint(e.Graphics);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -32,20 +32,11 @@ namespace Snake
             base.OnKeyDown(e);
         }
 
-        private GameMain _Main;
-
         [System.ComponentModel.DefaultValue(null)]
         public GameMain Main
         {
-            get
-            {
-                return this._Main;
-            }
-            set
-            {
-                this._Main = value;
-                this.Main.Graphics = this.CreateGraphics();
-            }
+            get;
+            set;
         }
 
     }
