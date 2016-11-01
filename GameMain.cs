@@ -41,21 +41,18 @@ namespace Snake
                 default:
                     return;
             }
-            if (this.DirectionQueue.Count == 0)
+
+            var LastDirection = this.Direction;
+            if (this.DirectionQueue.Count != 0)
             {
-                if ((dir.Width == 0) == (this.Direction.Width == 0))
-                {
-                    return;
-                }
+                LastDirection = this.DirectionQueue.Last();
             }
-            else
+            if ((dir.Width == 0) == (LastDirection.Width == 0))
             {
-                if ((dir.Width == 0) == (this.DirectionQueue.Last().Width == 0))
-                {
-                    return;
-                }
+                return;
             }
-            if (this.DirectionQueue.Count >= 2)
+
+            if (this.DirectionQueue.Count > 1)
             {
                 var t = this.DirectionQueue.Peek();
                 this.DirectionQueue.Clear();
@@ -66,9 +63,16 @@ namespace Snake
 
         public async void StartLife()
         {
+            this.IsLiving = true;
             while (true)
             {
                 await Task.Delay(DelayInterval);
+
+                if (!this.IsLiving)
+                {
+                    break;
+                }
+
                 if (this.DirectionQueue.Count != 0)
                 {
                     this.Direction = this.DirectionQueue.Dequeue();
@@ -79,7 +83,12 @@ namespace Snake
             }
         }
 
-        private void Repaint()
+        public void EndLife()
+        {
+            this.IsLiving = false;
+        }
+
+        public void Repaint()
         {
             this.Graphics.Clear(Color.White);
             foreach (var e in this.Points)
@@ -107,6 +116,7 @@ namespace Snake
         private const int InitialLength = 10;
         private const int DelayInterval = 300;
 
+        private bool IsLiving = false;
         private Size Direction = new Size(1, 0);
         private Queue<Size> DirectionQueue = new Queue<Size>();
         private readonly Queue<Point> Points = new Queue<Point>();

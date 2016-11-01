@@ -14,7 +14,7 @@ namespace Snake
     {
         public Form1()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -23,13 +23,9 @@ namespace Snake
             this.Main.StartLife();
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-        }
-
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            this.gameMainControl1.ReportKeyDown(e.KeyCode);
+            this.Main.EndLife();
         }
 
         private readonly GameMain Main = new GameMain();

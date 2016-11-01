@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,23 +15,21 @@ namespace Snake
         {
         }
 
-        internal void ReportKeyDown(Keys key)
+        protected override bool IsInputKey(Keys keyData)
         {
-            this.Main.ReportKeyDown(key);
+            return true;
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            this.Main?.Repaint();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            this.Main.ReportKeyDown(e.KeyCode);
+            this.Main?.ReportKeyDown(e.KeyCode);
             base.OnKeyDown(e);
-        }
-
-        public override bool Focused
-        {
-            get
-            {
-                return true;
-            }
         }
 
         private GameMain _Main;
